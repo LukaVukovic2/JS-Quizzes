@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/users-data-form.css">
+  <title>Login</title>
+</head>
+<body>
+  <div class="form-container">
+    <form id="login-form" class="users-data-form">
+      <h2 class="users-form-title">Login</h2>
+      <div id="email-container-login">
+        <input type="email" id="login-email" class="users-data-input" placeholder="Email (example@mail.com)" autofocus="1">
+      </div>
+      <div id="password-container-login">
+        <input type="password" id="login-password" class="users-data-input" placeholder="Password">
+      </div>
+      <button type="submit" id="login-btn" class="users-form-button">Login</button>
+    </form>
+    <div id="new-user-container">
+      <p>Don't have an account?</p>
+      <button id="signup-form-btn" class="users-form-button" onclick="document.location='signup-form.html'">Create new account</button>
+    </div>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="js-users/signin.js" type="module"></script>
+</body>
+</html>

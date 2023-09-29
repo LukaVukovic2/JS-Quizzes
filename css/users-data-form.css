@@ -1,0 +1,46 @@
+body{
+  padding-top: 30px;
+}
+.form-container{
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 2px solid lightgrey;
+  border-radius: 10px;
+}
+
+.users-form-title{
+  font-size: 28px;
+  text-align: center;
+}
+
+.users-data-form div{
+  margin-bottom: 8px;
+}
+
+.users-data-input{
+  line-height: 30px;
+  width: 395.5px;
+  border-radius: 3px;
+  border: 1px solid black;
+  font-size: 15px;
+}
+
+.users-form-button{
+  border-radius: 7px;
+  text-align: center;
+}
+
+
+#old-user-container p, #new-user-container p{
+  display: inline-block;
+}
+
+#signup-btn, #login-btn{
+  padding: 10px 0;
+  width: 100%;
+}
+
+#login-form-btn, #signup-form-btn{
+  padding: 5px 10px;
+}
