@@ -9,15 +9,11 @@ const userSignIn = async () => {
   const loginEmail = email.value;
   const loginPassword = password.value;
 
-  // Clear any existing error message
   clearErrorMessage();
 
-  signInWithEmailAndPassword(auth, loginEmail, loginPassword)
+  await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
     .then((userCredential) => {
       const user = userCredential.user;
-      alert("Success");
-
-      // Navigate to the home page (replace "home.html" with the actual path)
       window.location.href = "../home.html";
     })
     .catch((error) => {
@@ -44,16 +40,17 @@ const userSignIn = async () => {
     });
 };
 
+signInForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  userSignIn();
+});
+
 function clearErrorMessage() {
   if (element) {
     element.remove();
     element = null;
     email.style.border = "";
-    password.style.border = ""; // Clear the red border from the password input
+    password.style.border = "";
   }
 }
-
-signInForm.addEventListener("submit", function (e) {
-  e.preventDefault();
-  userSignIn();
-});
+  

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Create quiz</title>
+  <link rel="stylesheet" href="css/navigation.css">
+  <link rel="stylesheet" href="css/create-quiz.css">
+</head>
+<body>
+  <nav class="navigation">
+    <ul>
+      <div>
+        <li><a href="home.html">Home</a></li>
+        <li class="quiz-dropdown">
+          <a href="#" class="quiz-dropbtn">Quizzes</a>
+          <ul class="quiz-dropdown-content">
+            <li><a href="quizzes.html">Play Quizzes</a></li>
+            <li><a href="#.html">Create Quiz</a></li>
+          </ul>
+        </li>
+      </div>
+      <div>
+        <li><a href="user-profile.html">Profile</a></li>
+        <li><a href="#" id="logout-link">Logout</a></li>
+      </div>
+    </ul>
+  </nav>
+  
+  <main>
+
+    <form>
+      <div class="create-quiz-container">
+        <h2>Create your own Quiz!</h2>
+        <p>Category</p>
+        <div class="select-category-container">
+          <select class="select-category">
+            <option selected="true" disabled="disabled">Choose category</option>
+            <option>Sport</option>
+            <option>Movie/Shows</option>
+            <option>Music</option>
+            <option>Geography</option>
+            <option>History</option>
+            <option class="other-category">Other</option>
+          </select>
+        </div>
+        <button class="next-btn">Next</button>
+        <div class="questions-container">
+          <input type="text" class="quiz-title" placeholder="Quiz title">
+          <div class="create-question">
+            <p>Quiz should have more than four and less than 10 questions</p>
+            <input class="quiz-question" type="text" placeholder="Enter your question">
+            <input class="quiz-answer" type="text" placeholder="Enter four answers and capitalize correct one: e.g answer1,answer2,ANSWER3,answer4">
+            <button class="next-question-btn">Next question</button>
+            <button class="terminate-quiz-btn">Finish quiz</button>
+          </div>
+          <div class="current-quiz-questions">
+          </div>
+          <button class="save-quiz-btn">Save quiz</button>
+        </div>
+      </div>
+    </form>
+  </main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="js-quizzes/create-quiz.js" type="module"></script>
+  <script src="js-users/logout.js" type="module"></script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="css/navigation.css">
+  <title>Profile</title>
+  <link rel="stylesheet" href="css/profile-data.css">
+</head>
+<body>
+  <nav class="navigation">
+    <ul>
+      <div>
+        <li><a href="home.html">Home</a></li>
+        <li class="quiz-dropdown">
+          <a href="#" class="quiz-dropbtn">Quizzes</a>
+          <ul class="quiz-dropdown-content">
+            <li><a href="quizzes.html">Play Quizzes</a></li>
+            <li><a href="create-quiz.html">Create Quiz</a></li>
+          </ul>
+        </li>
+      </div>
+      <div>
+        <li><a href="#">Profile</a></li>
+        <li><a href="#" id="logout-link">Logout</a></li>
+      </div>
+    </ul>
+  </nav>
+  <header id="header"></header>
+  <main></main>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="js-users/profile.js" type="module"></script>
+  <script src="js-users/logout.js" type="module"></script>
+</body>
+</html>

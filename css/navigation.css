@@ -1,0 +1,58 @@
+body{
+  margin: 0;
+}
+
+.navigation div{
+  display: flex;
+}
+
+ul{
+  list-style-type: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  background-color: lightblue;
+}
+
+li{
+  width: 130px;
+  text-align: center;
+}
+
+.quiz-dropdown{
+  position: relative;
+}
+.quiz-dropdown-content{
+  display: none;
+  position: absolute;
+  width: 130px;
+}
+
+.quiz-dropdown-content li{
+  display: block;
+  text-align: center;
+}
+
+.quiz-dropdown-content a{
+  width: 130px;
+  display: block;
+}
+
+.quiz-dropdown:hover .quiz-dropdown-content{
+  display: block;
+}
+
+a{
+  text-decoration: none;
+  display: block;
+  padding: 20px 0;
+  color: white;
+}
+
+a:hover{
+  background-color: white;
+  color: lightblue;
+}
