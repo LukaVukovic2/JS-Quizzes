@@ -1,5 +1,4 @@
-import { auth, onAuthStateChanged } from "../firebase/firebase-config.js";
-
+import { auth, onAuthStateChanged, push, quizzesInDB } from "../firebase/firebase-config.js";
 
 const categoryContainer = document.querySelector(".select-category-container");
 const category = document.querySelector(".select-category");
@@ -16,29 +15,30 @@ const saveQuizBtn = document.querySelector(".save-quiz-btn");
 
 let selectedOptionIndex = category.selectedIndex;
 let selectedOption = category.options[selectedOptionIndex];
-let input;
+let inputCategory;
+let quizInfo;
 const questions = [];
 
 category.addEventListener("change", () => {
   selectedOptionIndex = category.selectedIndex;
   selectedOption = category.options[selectedOptionIndex];
 
-  if (selectedOption.value === "Other" && !input) {
-    input = document.createElement("input");
-    input.placeholder = "Which category?";
-    input.style.marginTop = "10px";
-    input.addEventListener("input", showNextButton);
-    categoryContainer.appendChild(input);
-  } else if (input) {
-    categoryContainer.removeChild(input);
-    input = null;
+  if (selectedOption.value === "Other" && !inputCategory) {
+    inputCategory = document.createElement("input");
+    inputCategory.placeholder = "Which category?";
+    inputCategory.style.marginTop = "10px";
+    inputCategory.addEventListener("input", showNextButton);
+    categoryContainer.appendChild(inputCategory);
+  } else if (inputCategory) {
+    categoryContainer.removeChild(inputCategory);
+    inputCategory = null;
   }
 
   showNextButton();
 });
 
 function showNextButton() {
-  if ((input && input.value.length >= 3) || selectedOption.value !== "Other") {
+  if ((inputCategory && inputCategory.value.length >= 3) || selectedOption.value !== "Other") {
     nextButton.style.display = "block";
   } else {
     nextButton.style.display = "none";
@@ -110,7 +110,7 @@ terminateQuiz.addEventListener("click", e =>{
 function showButtonForSavingQuiz(){
   onAuthStateChanged(auth, user => {
     console.log(auth.currentUser)
-    const quizInfo = {
+    quizInfo = {
       title: quizTitle.value,
       category: selectedOption.value,
       questions: questions,
@@ -135,14 +135,23 @@ function showCurrentQuizInputs(questionObj) {
   currentQuizQuestions.innerHTML += string;
 }
 
-/*saveQuizBtn.addEventListener("click", () =>{
-  app.initializeApp(firebaseConfig);
-  const quizRef = db.ref('quizzes');
-  quizRef.push(quizInfo)
+saveQuizBtn.addEventListener("click", (e) =>{
+  e.preventDefault();
+  saveQuiz();
+})
+
+function saveQuiz(){
+  push(quizzesInDB, quizInfo)
   .then(() => {
-    console.log('Data saved successfully.');
+    console.log('Quiz has been successfully saved.');
+    resetCreateQuizForm();
   })
   .catch((error) => {
     console.error('Error saving data:', error);
   });
-})*/
+}
+
+function resetCreateQuizForm(){
+  window.location.reload();
+  alert("Quiz has been successfully saved.");
+}

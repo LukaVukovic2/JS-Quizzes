@@ -1,4 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-app.js";
+import { getDatabase, ref, push, onValue} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -18,5 +19,10 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
+console.log(app);
+
+const db = getDatabase(app);
+const quizzesInDB = ref(db, "quizzes");
+
 const auth = getAuth(app);
-export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut };
+export { auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut, push, db, quizzesInDB, onValue };
