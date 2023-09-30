@@ -1,21 +1,29 @@
 import { auth, onAuthStateChanged, push, quizzesInDB, onValue } from "../firebase/firebase-config.js";
 
 let quizInfoContainer = document.querySelector(".quiz-info-container");
-
 let quizzesArray;
-
-
+let currentQuizID;
 
 onValue(quizzesInDB, function(snapshot){
   quizInfoContainer.innerHTML = "";
-  quizzesArray = Object.values(snapshot.val());
+  quizzesArray = Object.entries(snapshot.val());
+  let i = 0;
   quizzesArray.forEach((quiz, index) => {
+    let currentQuiz = quizzesArray[i];
+    currentQuizID = currentQuiz[0];
+    let currentQuizValue = currentQuiz[1];
+    let quizEl = document.createElement("div");
+    quizEl.classList.add("quiz-info");
     let string = 
-      ` <div class="quiz-info">
-          <h3>${quiz.title}</h3>
-          <p>Category: ${quiz.category}</p>
-          <p>Author: ${quiz.author[0]}</p>
-        </div>`;
-    quizInfoContainer.innerHTML += string;
+      ` <h3>${currentQuizValue.title}</h3>
+        <p>Category: ${currentQuizValue.category}</p>
+        <p>Author: ${currentQuizValue.author[0]}</p>
+        <a href="quiz.html?id=${currentQuizID}">Start Quiz</a>
+      `;
+    quizEl.innerHTML = string;
+    quizInfoContainer.appendChild(quizEl);
+    i++;
   });
 });
+
+
