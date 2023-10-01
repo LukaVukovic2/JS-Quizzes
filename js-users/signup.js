@@ -1,4 +1,4 @@
-import { auth, createUserWithEmailAndPassword } from "../firebase/firebase-config.js";
+import { auth, createUserWithEmailAndPassword } from "https://lukavukovic2.github.io/JS-Quizzes/firebase/firebase-config.js";
 
 const email = document.querySelector("#email");
 const password = document.querySelector("#pass");

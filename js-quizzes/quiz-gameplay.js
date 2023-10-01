@@ -1,6 +1,6 @@
-import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from "../firebase/firebase-config.js";
+import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from "https://lukavukovic2.github.io/JS-Quizzes/firebase/firebase-config.js";
 import { getDatabase, get} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { checkAuthentification } from "./authentification-check.js";
+import { checkAuthentification } from "https://lukavukovic2.github.io/JS-Quizzes/js-users/authentification-check.js";
 
 const specificQuizContainer = document.querySelector(".specific-quiz-container");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
@@ -84,7 +84,8 @@ finishQuizBtn.addEventListener("click", (e) => {
       userScore++;
     }
   }
-
+  userScore = userScore / correctAnswers.length
+  userScore.toFixed(2);
   console.log("User's score:", userScore);
 });
 

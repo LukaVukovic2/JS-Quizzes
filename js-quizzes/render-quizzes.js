@@ -1,5 +1,5 @@
-import { auth, onAuthStateChanged, push, quizzesInDB, onValue } from "../firebase/firebase-config.js";
-import { checkAuthentification } from "./authentification-check.js";
+import { auth, onAuthStateChanged, push, quizzesInDB, onValue } from "https://lukavukovic2.github.io/JS-Quizzes/firebase/firebase-config.js";
+import { checkAuthentification } from "https://lukavukovic2.github.io/JS-Quizzes/js-users/authentification-check.js";
 
 let quizInfoContainer = document.querySelector(".quiz-info-container");
 let quizzesArray;
