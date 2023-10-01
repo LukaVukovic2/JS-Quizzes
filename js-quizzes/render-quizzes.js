@@ -1,8 +1,11 @@
 import { auth, onAuthStateChanged, push, quizzesInDB, onValue } from "../firebase/firebase-config.js";
+import { checkAuthentification } from "./authentification-check.js";
 
 let quizInfoContainer = document.querySelector(".quiz-info-container");
 let quizzesArray;
 let currentQuizID;
+
+checkAuthentification();
 
 onValue(quizzesInDB, function(snapshot){
   if(snapshot.exists()){

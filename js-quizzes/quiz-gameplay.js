@@ -1,5 +1,6 @@
 import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from "../firebase/firebase-config.js";
 import { getDatabase, get} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { checkAuthentification } from "./authentification-check.js";
 
 const specificQuizContainer = document.querySelector(".specific-quiz-container");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
@@ -11,6 +12,8 @@ let correctAnswers = [];
 
 const id = urlParams.get('id');
 const quizRef = ref(db, `quizzes/${id}`);
+
+checkAuthentification();
 
 get(quizRef)
   .then((snapshot) => {

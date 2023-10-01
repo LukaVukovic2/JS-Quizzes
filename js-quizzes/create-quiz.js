@@ -1,4 +1,5 @@
 import { auth, onAuthStateChanged, push, quizzesInDB } from "../firebase/firebase-config.js";
+import { checkAuthentification } from "./authentification-check.js";
 
 const categoryContainer = document.querySelector(".select-category-container");
 const category = document.querySelector(".select-category");
@@ -18,6 +19,8 @@ let selectedOption = category.options[selectedOptionIndex];
 let inputCategory;
 let quizInfo;
 const questions = [];
+
+checkAuthentification();
 
 category.addEventListener("change", () => {
   selectedOptionIndex = category.selectedIndex;

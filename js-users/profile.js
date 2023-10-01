@@ -1,4 +1,7 @@
 import { auth, onAuthStateChanged } from "../firebase/firebase-config.js";
+import { checkAuthentification } from "./authentification-check.js";
+
+checkAuthentification();
 
 const header = document.querySelector("header");
 onAuthStateChanged(auth, user => {
