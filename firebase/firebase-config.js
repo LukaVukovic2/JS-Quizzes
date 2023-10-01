@@ -19,12 +19,9 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-console.log(app);
 
 const auth = getAuth(app);
 
 const db = getDatabase(app);
 const quizzesInDB = ref(db, "quizzes");
-console.log(quizzesInDB);
-
 export{push, onValue, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getAuth, quizzesInDB, db, ref}
