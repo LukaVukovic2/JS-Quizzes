@@ -14,7 +14,7 @@ const userSignIn = async () => {
   await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
     .then((userCredential) => {
       const user = userCredential.user;
-      window.location.href = "../home.html";
+      window.location.href = "../JS-Quizzes/home.html";
     })
     .catch((error) => {
       const errorCode = error.code;

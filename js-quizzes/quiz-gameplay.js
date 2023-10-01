@@ -2,8 +2,12 @@ import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from ".
 import { getDatabase, get} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 
 const specificQuizContainer = document.querySelector(".specific-quiz-container");
+const finishQuizBtn = document.querySelector(".finish-quiz-btn");
+let givenAnswers = [];
 let correctAnswerEl;
 const urlParams = new URLSearchParams(window.location.search);
+let correctAnswers = [];
+
 
 const id = urlParams.get('id');
 const quizRef = ref(db, `quizzes/${id}`);
@@ -13,6 +17,7 @@ get(quizRef)
     if (snapshot.exists()) {
       const quizData = snapshot.val();
       console.log('Quiz Data:', quizData);
+      finishQuizBtn.style.display = "block";
       displayQuiz(quizData);
     } else {
       specificQuizContainer.innerHTML = 'Quiz not found';
@@ -51,16 +56,32 @@ function displayQuiz(data) {
       label.appendChild(document.createTextNode(option));
 
       elements += label.outerHTML;
+      const correctOption = `option${question.correctAnswerIndex}`;
+      correctAnswers.push(correctOption);
     })
   })
-
-  const finishQuizBtn = document.createElement("button");
-  finishQuizBtn.appendChild(document.createTextNode("Finish quiz"));
-  elements += finishQuizBtn.outerHTML;
   specificQuizContainer.innerHTML = elements;
-  console.log(specificQuizContainer)
 }
 
 function capitalizeFirstLetter(str) {
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
+
+finishQuizBtn.addEventListener("click", (e) => {
+  e.preventDefault();
+  givenAnswers = [];
+  let userScore = 0;
+  const radioInputs = document.querySelectorAll('input[type="radio"]:checked');
+  radioInputs.forEach((radioInput) => {
+    givenAnswers.push(radioInput.value);
+  });
+
+  for (let i = 0; i < givenAnswers.length && i < correctAnswers.length; i++) {
+    if (givenAnswers[i] === correctAnswers[i]) {
+      userScore++;
+    }
+  }
+
+  console.log("User's score:", userScore);
+});
+
