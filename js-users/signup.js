@@ -11,7 +11,7 @@ const userSignUp = async () => {
   createUserWithEmailAndPassword(auth, emailVal, passVal)
     .then((userCredential) => {
       const user = userCredential.user;
-      window.location.href = "../home.html";
+      window.location.href = "https://lukavukovic2.github.io/JS-Quizzes/home.html";
     })
     .catch((error) => {
       const errorCode = error.code;
