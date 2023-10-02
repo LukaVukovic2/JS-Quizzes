@@ -1,3 +1,64 @@
+body{
+  font-size: 18px;
+  padding-bottom: 50px;
+  font-family: "Dosis", sans-serif;
+}
+
+main{
+  padding: 20px;
+}
+form{
+  max-width: 700px;
+  margin: 0 auto;
+  border: 2px solid lightblue;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
 .finish-quiz-btn{
   display: none;
+}
+
+.restart-quiz-btn, .finish-quiz-btn{
+  margin-top: 20px;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.finish-quiz-btn:hover, .restart-quiz-btn:hover{
+  background-color: lightblue;
+  color: white;
+}
+
+
+.question-options{
+  cursor: pointer;
+  margin-right: 15px;
+  display: block;
+  padding: 20px 0px;
+  border: 1px solid lightblue;
+  margin-top: -1px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.question-options input{
+  visibility: hidden;
+}
+
+.question-options:hover{
+  background-color: rgb(222, 222, 222);
+}
+
+.result-element{
+  position: absolute;
+  top: 0;
+  right: 25px;
+  width: 60%;
+  white-space: break-spaces;
+  text-align: center;
+  font-family: "Dosis", sans-serif;
 }
