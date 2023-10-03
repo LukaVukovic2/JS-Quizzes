@@ -59,7 +59,8 @@ nextQuestionBtn.addEventListener("click", (e) => {
     questions.push(questionObj);
     
     showCurrentQuizInputs(questionObj);
-    
+    resetQuestionInput();
+
     if ((questions.length === 10)){
       showButtonForSavingQuiz();
       return
@@ -72,7 +73,7 @@ nextQuestionBtn.addEventListener("click", (e) => {
 
 function parseQuestionAndAnswers() {
   const answersText = quizAnswer.value;
-  const answersArray = answersText.split(",");
+  const answersArray = answersText.split(";");
 
   if(answersArray.length !== 4){
     alert("Please provide four answer options!");
@@ -97,7 +98,6 @@ function parseQuestionAndAnswers() {
       answers: trimmedAnswers,
       correctAnswerIndex: correctAnswerIndex
     };
-
     return questionObj;
   }
 }
@@ -154,4 +154,9 @@ function saveQuiz(){
 function resetCreateQuizForm(){
   window.location.reload();
   alert("Quiz has been successfully saved.");
+}
+
+function resetQuestionInput(){
+  quizQuestion.value = "";
+  quizAnswer.value = "";
 }

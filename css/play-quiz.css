@@ -1,5 +1,5 @@
 body{
-  font-size: 18px;
+  font-size: 16px;
   padding-bottom: 50px;
   font-family: "Dosis", sans-serif;
 }
@@ -8,7 +8,7 @@ main{
   padding: 20px;
 }
 form{
-  max-width: 700px;
+  max-width: 900px;
   margin: 0 auto;
   border: 2px solid lightblue;
   border-radius: 8px;
@@ -18,15 +18,21 @@ form{
 }
 
 .finish-quiz-btn{
-  display: none;
+  display: none
 }
 
-.restart-quiz-btn, .finish-quiz-btn{
+.finish-quiz-btn{
   margin-top: 20px;
   padding: 10px 20px;
   border-radius: 8px;
   border: none;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+.restart-quiz-btn{
+  font-size: 30px;
+  border: none;
+  border-radius: 8px;
+  margin-bottom: 15px;
 }
 
 .finish-quiz-btn:hover, .restart-quiz-btn:hover{
@@ -54,11 +60,31 @@ form{
 }
 
 .result-element{
-  position: absolute;
-  top: 0;
-  right: 25px;
   width: 60%;
   white-space: break-spaces;
   text-align: center;
   font-family: "Dosis", sans-serif;
+  line-height: 1.5;
+  text-align: center;
+}
+
+.result-element b{
+  font-size: 25px;
+  vertical-align: middle;
+}
+
+.countdown{
+  border: 2px solid black;
+  padding: 5px;
+  border-radius: 8px;
+  display: inline-block;
+}
+
+.quiz-header{
+  display: flex;
+  justify-content: space-between;
+  align-items:baseline;
+}
+.countdown{
+  display: none;
 }

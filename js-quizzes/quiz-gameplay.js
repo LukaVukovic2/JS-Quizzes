@@ -1,10 +1,18 @@
 import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from "../firebase/firebase-config.js";
 import { getDatabase, get} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
-import { excellentResult, goodResult, averageResult, belowAverageResult, failureResult } from "../js-quizzes/result-comment.js";
+import { perfectResult, excellentResult, goodResult, averageResult, belowAverageResult, failureResult } from "../js-quizzes/result-comment.js";
 
+const quizHeader = document.querySelector(".quiz-header");
 const specificQuizContainer = document.querySelector(".specific-quiz-container");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
+const countdown = document.querySelector(".countdown");
+const startingMinutes = 1;
+let time = startingMinutes * 60;
+let startBtn;
+countdown.innerHTML = `${startingMinutes}: 00`;
+
 const urlParams = new URLSearchParams(window.location.search);
+
 let correctAnswersShown = false;
 let selectedAnswers;
 let correctAnswers = [];
@@ -14,6 +22,7 @@ let userAnswers;
 let checkmark;
 let cross;
 let scorePercentage;
+let refreshIntervalId;
 
 const id = urlParams.get('id');
 const quizRef = ref(db, `quizzes/${id}`);
@@ -23,9 +32,9 @@ get(quizRef)
     if (snapshot.exists()) {
       const quizData = snapshot.val();
       console.log('Quiz Data:', quizData);
-      finishQuizBtn.style.display = "block";
       displayQuiz(quizData);
       showSelectedAnswer();
+      toggleInputAvailability();
     } else {
       specificQuizContainer.innerHTML = 'Quiz not found';
     }
@@ -35,6 +44,20 @@ get(quizRef)
   });
 
 function displayQuiz(data) {
+  countdown.style.display = "block";
+  startBtn = document.createElement("button");
+  startBtn.classList.add("start-btn");
+  startBtn.addEventListener("click", (e)=>{
+    e.preventDefault();
+    if(!refreshIntervalId){
+      startBtn.disabled = true;
+      finishQuizBtn.style.display = "block";
+      toggleInputAvailability();
+      refreshIntervalId = setInterval(updateCountdown, 1000); 
+    }
+  })
+  startBtn.innerHTML = "Start";
+  quizHeader.insertBefore(startBtn, quizHeader.firstChild)
   let elements = `
     <h2>${data.title}</h2>
     <p>Author: ${data.author[0]}</p>
@@ -43,7 +66,7 @@ function displayQuiz(data) {
   data.questions.forEach((question, index) => {
     elements += `
       <div class="question-container">
-        <p>${index + 1}. ${question.question}</p>
+        <p>${index + 1}. <b>${question.question}</b></p>
     `;
     question.answers.forEach((option, i) => {
       option = capitalizeFirstLetter(option);
@@ -84,9 +107,7 @@ function capitalizeFirstLetter(str) {
 
 finishQuizBtn.addEventListener("click", (e) => {
   e.preventDefault();
-  calculateAndShowResult();
-  toggleInputAvailability();
-  toggleCorrectAnswers();
+  stopCountdown();
 });
 
 function calculateAndShowResult(){
@@ -114,34 +135,37 @@ function calculateAndShowResult(){
   
 
   resultEl = document.createElement("pre");
-  resultEl.innerHTML = `Score: ${userScore}/${numberOfQuestions}    You got ${scorePercentage}%`
+  resultEl.innerHTML = `Score: <b>${userScore}/${numberOfQuestions}</b>    You got: <b>${scorePercentage}%</b>`
   resultEl.classList.add("result-element");
   
   addResultComment();
-  specificQuizContainer.insertBefore(resultEl, specificQuizContainer.firstChild);
-  
-  
+  quizHeader.insertBefore(resultEl, countdown);
   finishQuizBtn.style.display = "none";
 
   restartQuizBtn = document.createElement("button");
-  restartQuizBtn.textContent = "Restart quiz";
+  restartQuizBtn.innerHTML = "&#8635;";
   restartQuizBtn.classList.add("restart-quiz-btn");
+  restartQuizBtn.title = "Restart quiz"
 
-  specificQuizContainer.appendChild(restartQuizBtn);
+  quizHeader.insertBefore(restartQuizBtn, resultEl);
   restartQuizBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     restartQuiz();
-    toggleInputAvailability();
+    refreshIntervalId = setInterval(updateCountdown, 1000); 
     toggleCorrectAnswers();
-    specificQuizContainer.removeChild(restartQuizBtn);
-    specificQuizContainer.removeChild(resultEl);
+    toggleInputAvailability();
   })
 }
+
 function restartQuiz(){
   selectedAnswers.forEach(input => {
     input.checked = false;
   })
   finishQuizBtn.style.display = "block";
+  quizHeader.removeChild(restartQuizBtn);
+  quizHeader.removeChild(resultEl);
+  time = startingMinutes * 60;
+  updateCountdown();
 }
 
 function toggleInputAvailability() {
@@ -149,6 +173,7 @@ function toggleInputAvailability() {
   inputs.forEach((input) => {
     input.disabled = !input.disabled;
   });
+  console.log("izv")
 }
 
 function toggleCorrectAnswers(){
@@ -234,24 +259,60 @@ function removeSymbol(selector) {
 }
 
 function addResultComment() {
-  const randomIndex = Math.floor(Math.random() * excellentResult.length);
+  let comment;
+
   switch (true) {
+    case scorePercentage == 100:
+      comment = getRandomComment(perfectResult);
+      break;
     case scorePercentage > 90:
-      resultEl.innerHTML += `<br>${excellentResult[randomIndex]}`;
+      comment = getRandomComment(excellentResult);
       break;
     case scorePercentage > 70:
-      resultEl.innerHTML += `<br>${goodResult[randomIndex]}`;
+      comment = getRandomComment(goodResult);
       break;
     case scorePercentage > 50:
-      resultEl.innerHTML += `<br>${averageResult[randomIndex]}`;
+      comment = getRandomComment(averageResult);
       break;
     case scorePercentage > 35:
-      resultEl.innerHTML += `<br>${belowAverageResult[randomIndex]}`;
+      comment = getRandomComment(belowAverageResult);
       break;
     case scorePercentage >= 0:
-      resultEl.innerHTML += `<br>${failureResult[randomIndex]}`;
+      comment = getRandomComment(failureResult);
       break;
     default:
       break;
   }
+
+  resultEl.innerHTML += `<br>${comment}`;
+}
+
+function getRandomComment(resultCommentArray) {
+  if (resultCommentArray.length === 0) {
+    return "";
+  }
+  const randomIndex = Math.floor(Math.random() * resultCommentArray.length);
+  return resultCommentArray[randomIndex];
+}
+
+
+function updateCountdown(){
+  const minutes = Math.floor(time / 60);
+  let seconds = time % 60;
+
+  seconds = seconds < 10 ? '0'+ seconds: seconds;
+
+  countdown.innerHTML = `${minutes}: ${seconds}`;
+  time--;
+  if (time < 0) {
+    stopCountdown();
+  }
+}
+
+function stopCountdown(){
+  clearInterval(refreshIntervalId);
+  calculateAndShowResult();
+  toggleInputAvailability();
+  toggleCorrectAnswers();
+  refreshIntervalId = null;
 }
