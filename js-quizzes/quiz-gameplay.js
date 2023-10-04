@@ -2,8 +2,10 @@ import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from ".
 import { getDatabase, get} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 import { perfectResult, excellentResult, goodResult, averageResult, belowAverageResult, failureResult } from "../js-quizzes/result-comment.js";
 
+const quizForm = document.querySelector(".quiz-form");
 const quizHeader = document.querySelector(".quiz-header");
 const specificQuizContainer = document.querySelector(".specific-quiz-container");
+const quizTitle = document.querySelector(".quiz-title");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
 const countdown = document.querySelector(".countdown");
 const startingMinutes = 1;
@@ -40,7 +42,7 @@ get(quizRef)
     }
   })
   .catch((error) => {
-    console.error('Error fetching quiz data:', error);
+    console.error('Error displaying quiz:', error);
   });
 
 function displayQuiz(data) {
@@ -50,19 +52,21 @@ function displayQuiz(data) {
   startBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     if(!refreshIntervalId){
-      startBtn.disabled = true;
+      startBtn.style.display = "none";
       finishQuizBtn.style.display = "block";
       toggleInputAvailability();
-      refreshIntervalId = setInterval(updateCountdown, 1000); 
+      refreshIntervalId = setInterval(updateCountdown, 1000);
+      specificQuizContainer.style.display = "block";
     }
   })
-  startBtn.innerHTML = "Start";
-  quizHeader.insertBefore(startBtn, quizHeader.firstChild)
-  let elements = `
+  startBtn.innerHTML = `<i class="fa fa-play fa-xl" aria-hidden="true"></i>`;
+  let elements = ``;
+  let quizBasicInfo = `
     <h2>${data.title}</h2>
     <p>Author: ${data.author[0]}</p>
     <p>${data.category}</p>
   `;
+  quizTitle.innerHTML = quizBasicInfo;
   data.questions.forEach((question, index) => {
     elements += `
       <div class="question-container">
@@ -97,8 +101,8 @@ function displayQuiz(data) {
       </div>
     `;
   });
-  
   specificQuizContainer.innerHTML = elements;
+  quizForm.insertBefore(startBtn, specificQuizContainer);
 }
 
 function capitalizeFirstLetter(str) {
@@ -137,9 +141,9 @@ function calculateAndShowResult(){
   resultEl = document.createElement("pre");
   resultEl.innerHTML = `Score: <b>${userScore}/${numberOfQuestions}</b>    You got: <b>${scorePercentage}%</b>`
   resultEl.classList.add("result-element");
-  
   addResultComment();
-  quizHeader.insertBefore(resultEl, countdown);
+  
+  quizHeader.append(resultEl);
   finishQuizBtn.style.display = "none";
 
   restartQuizBtn = document.createElement("button");
@@ -147,13 +151,14 @@ function calculateAndShowResult(){
   restartQuizBtn.classList.add("restart-quiz-btn");
   restartQuizBtn.title = "Restart quiz"
 
-  quizHeader.insertBefore(restartQuizBtn, resultEl);
+  quizHeader.append(restartQuizBtn);
   restartQuizBtn.addEventListener("click", (e)=>{
     e.preventDefault();
     restartQuiz();
-    refreshIntervalId = setInterval(updateCountdown, 1000); 
-    toggleCorrectAnswers();
     toggleInputAvailability();
+    toggleCorrectAnswers();
+    refreshIntervalId = setInterval(updateCountdown, 1000); 
+    
   })
 }
 
@@ -173,7 +178,6 @@ function toggleInputAvailability() {
   inputs.forEach((input) => {
     input.disabled = !input.disabled;
   });
-  console.log("izv")
 }
 
 function toggleCorrectAnswers(){
@@ -187,9 +191,7 @@ function toggleCorrectAnswers(){
       if((userAnswers[index] === correctAnswers[index]) || !userAnswers[index]){
         if(userAnswers[index] === correctAnswers[index]){
           checkmark = document.createElement("span");
-          checkmark.classList.add("question-checkmark");
-          checkmark.style.color = "lightgreen";
-          checkmark.innerHTML = " &#10003;"
+          checkmark.innerHTML = ` <i class="fa-solid fa-circle-check fa-2xl icon-class" style="color: #11ff00;"></i></i>`;
           label.parentElement.firstElementChild.appendChild(checkmark);
         }
         label.style.backgroundColor = "lightgreen";
@@ -215,11 +217,11 @@ function toggleCorrectAnswers(){
   }
   else{
     allLabelsArray.forEach((label) => {
-      label.style.backgroundColor = "white";
+      label.style.backgroundColor = "";
+      label.style.transform = "none";
     });
-    removeSymbol(".question-checkmark");
 
-    removeSymbol(".question-cross");
+    removeSymbol();
     correctAnswersShown = false;
   }
   
@@ -230,31 +232,34 @@ function showSelectedAnswer() {
 
   questionInputsEl.forEach((input) => {
     input.addEventListener("change", (event)=>{
-    const questionOptionLabelEl = event.target.parentElement;
+      const questionOptionLabelEl = event.target.parentElement;
 
-    const otherOptions = questionOptionLabelEl.parentElement.querySelectorAll('.question-options');
-    otherOptions.forEach((label) => {
-      label.style.backgroundColor = "";
-    });
+      const otherOptions = questionOptionLabelEl.parentElement.querySelectorAll('.question-options');
+      otherOptions.forEach((label) => {
+        label.style.backgroundColor = "";
+        label.style.transform = "none"
+      });
 
-    if (event.target.checked) {
-      questionOptionLabelEl.style.backgroundColor = "rgb(226, 248, 254)";
-    }
+      if (event.target.checked) {
+        questionOptionLabelEl.style.backgroundColor = "rgb(226, 248, 254)";
+        questionOptionLabelEl.style.transform = "scale(1.005)";
+      }
     });
   });
 }
 
 function addCrossSymbol(){
   cross = document.createElement("span");
-  cross.classList.add("question-cross");
-  cross.innerHTML = "  &#10060;";
+  cross.innerHTML = `
+    <i class="fa-solid fa-circle-xmark fa-2xl icon-class" style="color: #ff0000;"></i>
+  `;
   return cross;
 }
 
-function removeSymbol(selector) {
-  const questions = document.querySelectorAll(selector);
-  questions.forEach((question) => {
-    question.innerHTML = question.innerHTML.slice(0, -8);
+function removeSymbol() {
+  const icons = document.querySelectorAll('.icon-class');
+  icons.forEach((icon) => {
+    icon.remove();
   });
 }
 

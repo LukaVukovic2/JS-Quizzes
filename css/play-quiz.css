@@ -43,7 +43,6 @@ form{
 
 .question-options{
   cursor: pointer;
-  margin-right: 15px;
   display: block;
   padding: 20px 0px;
   border: 1px solid lightblue;
@@ -85,6 +84,20 @@ form{
   justify-content: space-between;
   align-items:baseline;
 }
-.countdown{
+
+.start-btn{
+  padding: 5px 10px;
+  border-radius: 8px;
+  border: 2px solid lightblue;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.start-btn:hover{
+  background-color: rgb(215, 234, 252);
+  transform: scale(1.05);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+}
+
+.specific-quiz-container{
   display: none;
 }
