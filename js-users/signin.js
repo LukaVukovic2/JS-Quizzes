@@ -1,4 +1,4 @@
-import { auth, signInWithEmailAndPassword } from "../firebase/firebase-config.js";
+import { auth, signInWithEmailAndPassword, updateProfile } from "../firebase/firebase-config.js";
 
 const email = document.querySelector("#login-email");
 const password = document.querySelector("#login-password");
@@ -14,7 +14,7 @@ const userSignIn = async () => {
   await signInWithEmailAndPassword(auth, loginEmail, loginPassword)
     .then((userCredential) => {
       const user = userCredential.user;
-      window.location.href = "../home.html";
+      window.location.href = "../quizzes.html";
     })
     .catch((error) => {
       const errorCode = error.code;

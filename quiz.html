@@ -15,14 +15,8 @@
   <nav class="navigation">
     <ul>
       <div>
-        <li><a href="home.html">Home</a></li>
-        <li class="quiz-dropdown">
-          <a href="#" class="quiz-dropbtn">Quizzes</a>
-          <ul class="quiz-dropdown-content">
-            <li><a href="quizzes.html">Play Quizzes</a></li>
-            <li><a href="create-quiz.html">Create Quiz</a></li>
-          </ul>
-        </li>
+        <li><a href="quizzes.html">Play Quizzes</a></li>
+        <li><a href="create-quiz.html">Create Quiz</a></li>
       </div>
       <div>
         <li><a href="user-profile.html">Profile</a></li>
@@ -32,16 +26,21 @@
   </nav>
   <main>
     <form class="quiz-form">
+      <div class="quiz-title">
+      </div>
       <div class="quiz-header">
         <div class="countdown"></div>
-      </div>
-      <div class="quiz-title">
       </div>
       <div class="specific-quiz-container">
       </div>
       <button class="finish-quiz-btn">Finish quiz</button>
     </form>
   </main>
+  <footer>
+    <div>
+      Luka Vuković &#183; 2023
+    </div>
+  </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   <script src="js-quizzes/quiz-gameplay.js" type="module"></script>
   <script src="js-users/logout.js" type="module"></script>

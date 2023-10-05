@@ -1,5 +1,11 @@
 body{
   margin: 0;
+  font-family: "Dosis", sans-serif;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, lightblue, rgb(165, 230, 251));
 }
 
 .navigation div{
@@ -14,35 +20,12 @@ ul{
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: lightblue;
+  background-color: rgb(105, 176, 248);
 }
 
 li{
   width: 130px;
   text-align: center;
-}
-
-.quiz-dropdown{
-  position: relative;
-}
-.quiz-dropdown-content{
-  display: none;
-  position: absolute;
-  width: 130px;
-}
-
-.quiz-dropdown-content li{
-  display: block;
-  text-align: center;
-}
-
-.quiz-dropdown-content a{
-  width: 130px;
-  display: block;
-}
-
-.quiz-dropdown:hover .quiz-dropdown-content{
-  display: block;
 }
 
 .navigation a{
@@ -53,6 +36,19 @@ li{
 }
 
 .navigation a:hover{
-  background-color: white;
-  color: lightblue;
+  background-color: rgb(68, 156, 244);
+  color: white;
+}
+
+
+main{
+  flex-grow: 1;
+}
+
+footer{
+  background-color: rgb(105, 176, 248);
+  color: white;
+  text-align: center;
+  padding: 10px 0;
+  margin-top: 20px;
 }

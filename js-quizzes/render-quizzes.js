@@ -18,7 +18,7 @@ onValue(quizzesInDB, function(snapshot){
       let string = 
         ` <h3>${currentQuizValue.title}</h3>
           <p>Category: ${currentQuizValue.category}</p>
-          <p>Author: ${currentQuizValue.author[0]}</p>
+          <p>By: ${currentQuizValue.author[0]}</p>
           <a href="quiz.html?id=${currentQuizID}">Start Quiz</a>
         `;
       quizEl.innerHTML = string;

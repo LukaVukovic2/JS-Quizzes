@@ -5,7 +5,8 @@ import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
+  updateProfile
 } from "https://www.gstatic.com/firebasejs/10.4.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -24,4 +25,4 @@ const auth = getAuth(app);
 
 const db = getDatabase(app);
 const quizzesInDB = ref(db, "quizzes");
-export{push, onValue, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getAuth, quizzesInDB, db, ref}
+export{push, onValue, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getAuth, quizzesInDB, db, ref, updateProfile}

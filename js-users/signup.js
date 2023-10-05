@@ -1,17 +1,23 @@
-import { auth, createUserWithEmailAndPassword } from "../firebase/firebase-config.js";
+import { auth, createUserWithEmailAndPassword, updateProfile } from "../firebase/firebase-config.js";
 
 const email = document.querySelector("#email");
 const password = document.querySelector("#pass");
+const username = document.querySelector("#username");
 const signUpForm = document.querySelector("#signup-form");
+
+username.addEventListener("click", console.log(username.value))
 
 const userSignUp = async () => {
   const emailVal = email.value;
   const passVal = password.value;
-  
   createUserWithEmailAndPassword(auth, emailVal, passVal)
     .then((userCredential) => {
       const user = userCredential.user;
-      window.location.href = "../home.html";
+      return updateProfile(user, {
+        displayName: username.value
+      }).then(() => {
+        window.location.href = "../quizzes.html";
+      });
     })
     .catch((error) => {
       const errorCode = error.code;

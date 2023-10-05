@@ -1,5 +1,15 @@
 main{
   padding: 30px;
+  color: black;
+}
+
+form{
+  margin: 0 auto;
+  max-width: 600px;
+  background-color: whitesmoke;
+  border-radius: 8px;
+  padding: 20px 20px 50px 20px;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
 .next-btn{
@@ -19,10 +29,16 @@ main{
   display: none;
 }
 
-.next-question-btn{
+.next-question-btn, .next-btn{
   padding: 10px 20px;
   border-radius: 8px;
-  border: 1px solid lightgrey;
+  border: 2px solid lightgrey;
+  background-color: white;
+}
+
+.next-question-btn:hover, .next-btn:hover{
+  background-color: rgb(233, 231, 231);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
 
 .terminate-quiz-btn{
@@ -31,4 +47,13 @@ main{
 
 .save-quiz-btn{
   display: none;
+}
+
+select{
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.input-category{
+  padding: 5px;
 }

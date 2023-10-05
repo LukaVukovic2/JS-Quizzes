@@ -27,6 +27,7 @@ category.addEventListener("change", () => {
     inputCategory = document.createElement("input");
     inputCategory.placeholder = "Which category?";
     inputCategory.style.marginTop = "10px";
+    inputCategory.classList.add("input-category");
     inputCategory.addEventListener("input", showNextButton);
     categoryContainer.appendChild(inputCategory);
   } else if (inputCategory) {
@@ -111,6 +112,7 @@ function showButtonForSavingQuiz(){
   onAuthStateChanged(auth, user => {
     console.log(auth.currentUser)
     quizInfo = {
+      plays: 0,
       title: quizTitle.value,
       category: selectedOption.value,
       questions: questions,

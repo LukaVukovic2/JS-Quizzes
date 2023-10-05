@@ -1,12 +1,16 @@
 body{
   padding-top: 30px;
+  font-family: "Dosis", sans-serif;
+  background: linear-gradient(to right, lightblue, rgb(165, 230, 251));
 }
 .form-container{
   max-width: 400px;
   margin: 0 auto;
   padding: 10px;
-  border: 2px solid lightgrey;
+  border: 2px solid lightblue;
   border-radius: 10px;
+  margin-top: 30px;
+  background-color: white;
 }
 
 .users-form-title{
@@ -22,13 +26,19 @@ body{
   line-height: 30px;
   width: 395.5px;
   border-radius: 3px;
-  border: 1px solid black;
+  border: 1px solid lightblue;
   font-size: 15px;
 }
 
 .users-form-button{
   border-radius: 7px;
   text-align: center;
+  border: 1px solid lightblue;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+}
+
+.users-form-button:hover{
+  background-color: rgb(222, 222, 222);
 }
 
 

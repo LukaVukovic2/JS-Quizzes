@@ -1,6 +1,5 @@
 body{
   font-size: 16px;
-  padding-bottom: 50px;
   font-family: "Dosis", sans-serif;
 }
 
@@ -8,13 +7,14 @@ main{
   padding: 20px;
 }
 form{
-  max-width: 900px;
+  max-width: 800px;
   margin: 0 auto;
   border: 2px solid lightblue;
   border-radius: 8px;
   padding: 20px;
   position: relative;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  background-color: whitesmoke;
 }
 
 .finish-quiz-btn{
@@ -28,18 +28,15 @@ form{
   border: none;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
-.restart-quiz-btn{
-  font-size: 30px;
-  border: none;
-  border-radius: 8px;
-  margin-bottom: 15px;
-}
 
-.finish-quiz-btn:hover, .restart-quiz-btn:hover{
+.finish-quiz-btn:hover{
   background-color: lightblue;
   color: white;
 }
 
+.stars{
+  color: gold;
+}
 
 .question-options{
   cursor: pointer;
@@ -48,10 +45,13 @@ form{
   border: 1px solid lightblue;
   margin-top: -1px;
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+  padding: 18px;
 }
 
 .question-options input{
   visibility: hidden;
+  margin: 0;
+  width: 0;
 }
 
 .question-options:hover{
@@ -77,6 +77,8 @@ form{
   padding: 5px;
   border-radius: 8px;
   display: inline-block;
+  font-size: 18px;
+  margin-top: 10px;
 }
 
 .quiz-header{
@@ -85,14 +87,18 @@ form{
   align-items:baseline;
 }
 
-.start-btn{
+.start-btn, .restart-quiz-btn{
   padding: 5px 10px;
   border-radius: 8px;
   border: 2px solid lightblue;
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.start-btn:hover{
+.start-btn{
+  margin-top: 10px;
+}
+
+.start-btn:hover, .restart-quiz-btn:hover{
   background-color: rgb(215, 234, 252);
   transform: scale(1.05);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
@@ -100,4 +106,21 @@ form{
 
 .specific-quiz-container{
   display: none;
+}
+
+.rating, .rating-options{
+  display: inline-block;
+}
+
+.rating-options{
+  cursor: pointer;
+}
+
+.star:hover {
+  color: gold;
+}
+
+.quiz-title{
+  color: black;
+  text-shadow: none;
 }
