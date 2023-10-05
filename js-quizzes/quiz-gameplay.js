@@ -40,7 +40,7 @@ get(quizRef)
       showSelectedAnswer();
       toggleInputAvailability();
     } else {
-      specificQuizContainer.innerHTML = 'Quiz not found';
+      quizForm.innerHTML = 'Quiz not found';
     }
   })
   .catch((error) => {

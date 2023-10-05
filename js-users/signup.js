@@ -16,7 +16,7 @@ const userSignUp = async () => {
       return updateProfile(user, {
         displayName: username.value
       }).then(() => {
-        window.location.href = "../quizzes.html";
+        window.location.href = "quizzes.html";
       });
     })
     .catch((error) => {

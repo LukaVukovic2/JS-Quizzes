@@ -79,6 +79,7 @@ form{
   display: inline-block;
   font-size: 18px;
   margin-top: 10px;
+  background-color: whitesmoke;
 }
 
 .quiz-header{
