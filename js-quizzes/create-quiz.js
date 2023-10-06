@@ -12,6 +12,8 @@ const quizAnswer = document.querySelector(".quiz-answer");
 const currentQuizQuestions = document.querySelector(".current-quiz-questions");
 const terminateQuiz = document.querySelector(".terminate-quiz-btn");
 const saveQuizBtn = document.querySelector(".save-quiz-btn");
+const timeLimit = document.querySelector(".quiz-time-limit");
+let totalTimeInSeconds;
 
 let selectedOptionIndex = category.selectedIndex;
 let selectedOption = category.options[selectedOptionIndex];
@@ -72,31 +74,43 @@ nextQuestionBtn.addEventListener("click", (e) => {
   }
 });
 
+function parseTimeInput(input) {
+  const regex = /(\d+)\s*m(inute)?\s*(\d+)\s*s(econd)?/i;
+  const match = input.match(regex);
+
+  if (match) {
+      const minutes = parseInt(match[1], 10);
+      const seconds = parseInt(match[3], 10);
+      if (minutes >= 0 && seconds >= 0) {
+          return (minutes * 60) + seconds;
+      }
+  }
+
+  return null;
+}
+
 function parseQuestionAndAnswers() {
   const answersText = quizAnswer.value;
   const answersArray = answersText.split(";");
 
-  if(answersArray.length !== 4){
-    alert("Please provide four answer options!");
-    return;
-  }
-  else{
+  if (answersArray.length !== 5) {
+    alert("Please provide four answer options, and repeat the correct answer as the fifth option.");
+    return null;
+  } else {
     const trimmedAnswers = answersArray.map(answer => answer.trim());
 
-    const correctAnswerIndices = trimmedAnswers
-      .map((answer, index) => (answer.toUpperCase() === answer ? index : -1))
-      .filter(index => index !== -1);
+    const repeatedAnswerIndex = trimmedAnswers.slice(0, 4).indexOf(trimmedAnswers[4]);
 
-    if (correctAnswerIndices.length !== 1) {
-      alert("Please provide exactly one correctly capitalized answer.");
+    if (repeatedAnswerIndex === -1) {
+      alert("The correct answer should match one of the provided answer options.");
       return null;
     }
 
-    const correctAnswerIndex = correctAnswerIndices[0];
+    const correctAnswerIndex = repeatedAnswerIndex;
 
     const questionObj = {
       question: quizQuestion.value,
-      answers: trimmedAnswers,
+      answers: trimmedAnswers.slice(0, 4),
       correctAnswerIndex: correctAnswerIndex
     };
     return questionObj;
@@ -109,16 +123,16 @@ terminateQuiz.addEventListener("click", e =>{
 })
 
 function showButtonForSavingQuiz(){
+  totalTimeInSeconds = parseTimeInput(timeLimit.value);
   onAuthStateChanged(auth, user => {
-    console.log(auth.currentUser)
     quizInfo = {
       plays: 0,
       title: quizTitle.value,
       category: selectedOption.value,
+      time: totalTimeInSeconds,
       questions: questions,
       author: [auth.currentUser.displayName, auth.currentUser.reloadUserInfo.localId]
     };
-    console.log(quizInfo);
     questionInputContainer.style.display = "none";
     saveQuizBtn.style.display = "block";
   });
@@ -128,7 +142,7 @@ function showCurrentQuizInputs(questionObj) {
   let i = questions.length;
   let string = `<p>${questions.length}. ${questionObj.question}</p><p>`;
 
-  questionObj.answers.forEach((answer, answerIndex) => {
+  questionObj.answers.slice(0, 4).forEach((answer, answerIndex) => {
     string += `Answer ${answerIndex + 1}: ${answer}, `;
   });
   string = string.slice(0, -2);
@@ -143,14 +157,19 @@ saveQuizBtn.addEventListener("click", (e) =>{
 })
 
 function saveQuiz(){
-  push(quizzesInDB, quizInfo)
-  .then(() => {
-    console.log('Quiz has been successfully saved.');
-    resetCreateQuizForm();
-  })
-  .catch((error) => {
-    console.error('Error saving data:', error);
-  });
+  if (totalTimeInSeconds !== null) {
+    push(quizzesInDB, quizInfo)
+    .then(() => {
+      console.log('Quiz has been successfully saved.');
+      resetCreateQuizForm();
+    })
+    .catch((error) => {
+      console.error('Error saving data:', error);
+    });
+  } else{
+    alert("Invalid time input!");
+    return
+  }
 }
 
 function resetCreateQuizForm(){
@@ -162,3 +181,4 @@ function resetQuestionInput(){
   quizQuestion.value = "";
   quizAnswer.value = "";
 }
+

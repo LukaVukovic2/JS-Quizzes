@@ -29,14 +29,15 @@ form{
   display: none;
 }
 
-.next-question-btn, .next-btn{
+.button{
   padding: 10px 20px;
   border-radius: 8px;
   border: 2px solid lightgrey;
   background-color: white;
+  cursor: pointer;
 }
 
-.next-question-btn:hover, .next-btn:hover{
+.button:hover{
   background-color: rgb(233, 231, 231);
   box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
 }
@@ -52,6 +53,7 @@ form{
 select{
   padding: 5px;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .input-category{

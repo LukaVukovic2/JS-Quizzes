@@ -20,10 +20,10 @@ ul{
   margin: 0;
   padding: 0;
   width: 100%;
-  background-color: rgb(105, 176, 248);
+  background-color: #007bff;
 }
 
-li{
+nav li{
   width: 130px;
   text-align: center;
 }
@@ -46,7 +46,7 @@ main{
 }
 
 footer{
-  background-color: rgb(105, 176, 248);
+  background-color: #007bff;
   color: white;
   text-align: center;
   padding: 20px 0;

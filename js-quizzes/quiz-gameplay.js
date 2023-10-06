@@ -8,12 +8,10 @@ const specificQuizContainer = document.querySelector(".specific-quiz-container")
 const quizTitle = document.querySelector(".quiz-title");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
 const countdown = document.querySelector(".countdown");
-const startingMinutes = 1;
-let time = startingMinutes * 60;
+let time;
+let tempTime;
 let startBtn;
-countdown.innerHTML = `${startingMinutes}: 00`;
-let stars;
-let ratingValueElement;
+
 const urlParams = new URLSearchParams(window.location.search);
 
 let correctAnswersShown = false;
@@ -26,8 +24,7 @@ let checkmark;
 let cross;
 let scorePercentage;
 let refreshIntervalId;
-let plays = 0;
-let userRating = 0;
+let plays;
 
 const id = urlParams.get('id');
 const quizRef = ref(db, `quizzes/${id}`);
@@ -36,6 +33,10 @@ get(quizRef)
   .then((snapshot) => {
     if (snapshot.exists()) {
       const quizData = snapshot.val();
+      time = quizData.time || 100;
+      plays = quizData.plays || 0;
+      tempTime = time;
+      updateCountdown();
       displayQuiz(quizData);
       showSelectedAnswer();
       toggleInputAvailability();
@@ -56,7 +57,6 @@ get(quizRef)
   }
   
   function displayQuiz(data) {
-    countdown.style.display = "block";
     startBtn = document.createElement("button");
     startBtn.classList.add("start-btn");
     startBtn.addEventListener("click", (e) => {
@@ -73,38 +73,11 @@ get(quizRef)
     let elements = ``;
     let quizBasicInfo = `
       <h2 class="quiz-title">${data.title}</h2>
-      <div>By: ${data.author[0]} &#183; ${data.category} &#183; ${data.plays} Plays &#183;
-        <div class="rating">
-          Ratings <span class="rating-value">${data.ratings || 0}</span>
-          <div class="rating-options">
-            ${renderStarRating(data.rating || 0)}
-          </div>
-        </div>
+      <div>By: ${data.author[0]} &#183; ${data.category} &#183; ${plays} Plays
       </div>
     `;
     quizTitle.innerHTML = quizBasicInfo;
-    const ratingOptions = document.querySelector('.rating-options');
-  ratingOptions.innerHTML = renderStarRating(data.rating || 0);
-
-  stars = document.querySelectorAll('.star');
-  ratingValueElement = document.querySelector('.rating-value');
-
-  stars.forEach((star) => {
-    star.addEventListener('click', () => {
-      const value = parseInt(star.getAttribute('data-value'));
-      userRating = value;
-      updateRating();
-    });
-
-    star.addEventListener('mouseover', () => {
-      const value = parseInt(star.getAttribute('data-value'));
-      highlightStars(value);
-    });
-
-    star.addEventListener('mouseout', () => {
-      highlightStars(userRating);
-    });
-  });
+  
     const questionsDB = shuffleQuestions(data.questions);
   
     questionsDB.forEach((question, index) => {
@@ -113,7 +86,6 @@ get(quizRef)
           <p><b>${index + 1}. ${question.question}</b></p>
       `;
       question.answers.forEach((option, i) => {
-        option = capitalizeFirstLetter(option);
         const label = document.createElement('label');
         label.setAttribute('for', `question${index}_option${i}`);
         label.classList.add(`question-options`);
@@ -143,12 +115,9 @@ get(quizRef)
     });
     specificQuizContainer.innerHTML = elements;
     quizForm.insertBefore(startBtn, specificQuizContainer);
+    countdown.style.display = "inline-block";
   }
-  
 
-function capitalizeFirstLetter(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
-}
 
 finishQuizBtn.addEventListener("click", (e) => {
   e.preventDefault();
@@ -210,7 +179,7 @@ function restartQuiz(){
   finishQuizBtn.style.display = "block";
   quizHeader.removeChild(restartQuizBtn);
   quizHeader.removeChild(resultEl);
-  time = startingMinutes * 60;
+  time = tempTime;
   updateCountdown();
 }
 
@@ -342,18 +311,21 @@ function getRandomComment(resultCommentArray) {
 }
 
 
-function updateCountdown(){
+function updateCountdown() {
   const minutes = Math.floor(time / 60);
-  let seconds = time % 60;
+  const seconds = time % 60;
 
-  seconds = seconds < 10 ? '0'+ seconds: seconds;
+  const formattedSec = seconds < 10 ? '0' + seconds : seconds;
+  const formattedMin = '0' + minutes;
 
-  countdown.innerHTML = `${minutes}: ${seconds}`;
+  countdown.innerHTML = `${formattedMin}:${formattedSec}`;
   time--;
+
   if (time < 0) {
     stopCountdown();
   }
 }
+
 
 function stopCountdown(){
   clearInterval(refreshIntervalId);
@@ -365,39 +337,6 @@ function stopCountdown(){
   const updatedData = {
     plays: plays,
   };
-
-  update(quizRef, updatedData)
-    .then(() => {
-      console.log('Data updated successfully.');
-    })
-    .catch((error) => {
-      console.error('Error updating data:', error);
-    });
-
-  console.log(plays);
-}
-
-function renderStarRating(rating) {
-  console.log(rating)
-  let starsHtml = '';
-  for (let i = 1; i <= 5; i++) {
-    const starClass = i <= rating ? 'star gold' : 'star';
-    starsHtml += `<span class="${starClass}" data-value="${i}">&#9733;</span>`;
-  }
-  return starsHtml;
-}
-
-function updateRating() {
-  ratingValueElement.textContent = userRating.toFixed(1);
-}
-
-function highlightStars(value) {
-  stars.forEach((star, index) => {
-    if (index < value) {
-      star.classList.add('gold');
-    } else {
-      star.classList.remove('gold');
-    }
-  });
+  update(quizRef, updatedData);
 }
 
