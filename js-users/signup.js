@@ -1,4 +1,4 @@
-import { auth, createUserWithEmailAndPassword, updateProfile } from "../firebase/firebase-config.js";
+import { auth, createUserWithEmailAndPassword, updateProfile, onAuthStateChanged } from "../firebase/firebase-config.js";
 
 const email = document.querySelector("#email");
 const password = document.querySelector("#pass");
@@ -7,6 +7,14 @@ const signUpForm = document.querySelector("#signup-form");
 const emailContainer = document.querySelector("#email-container");
 const formContainer = document.querySelector(".form-container");
 let errorEmailEl;
+
+
+onAuthStateChanged(auth, user => {
+  user = auth.currentUser;
+  if (user) {
+    window.location.href = "quizzes.html";
+  }
+});
 
 const userSignUp = async () => {
   const emailVal = email.value;

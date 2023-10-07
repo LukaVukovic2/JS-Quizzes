@@ -9,7 +9,7 @@ onAuthStateChanged(auth, user => {
 function checkAuth() {
   const user = auth.currentUser;
   if (!user) {
-    window.location.href = "login.html";
+    window.location.href = "login-form.html";
   }
 }
 
@@ -19,6 +19,7 @@ function applyAuthChecks() {
   if (protectedRoutes.includes(window.location.pathname)) {
     checkAuth();
   }
+
 }
 
 export{applyAuthChecks}

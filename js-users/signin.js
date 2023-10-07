@@ -1,9 +1,16 @@
-import { auth, signInWithEmailAndPassword } from "../firebase/firebase-config.js";
+import { auth, signInWithEmailAndPassword, onAuthStateChanged } from "../firebase/firebase-config.js";
 
 const email = document.querySelector("#login-email");
 const password = document.querySelector("#login-password");
 const signInForm = document.querySelector("#login-form");
 let element = document.querySelector("#error-message");
+
+onAuthStateChanged(auth, user => {
+  user = auth.currentUser;
+  if (user) {
+    window.location.href = "quizzes.html";
+  }
+});
 
 const userSignIn = async () => {
   const loginEmail = email.value;
