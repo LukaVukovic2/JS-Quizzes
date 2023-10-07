@@ -54,6 +54,9 @@ nav li{
     flex-wrap: wrap;
     width: 100%;
   }
+  .navigation a{
+    padding: 10px 0;
+  }
 }
 
 main{
