@@ -129,7 +129,7 @@ finishQuizBtn.addEventListener("click", (e) => {
 });
 
 function calculateAndShowResult(){
-  document.documentElement.scrollTop = 0;
+  document.documentElement.scrollTop = 100;
   let userScore = 0;
   selectedAnswers = document.querySelectorAll('input[type="radio"]:checked');
   let numberOfQuestions;
@@ -314,7 +314,6 @@ function getRandomComment(resultCommentArray) {
   return resultCommentArray[randomIndex];
 }
 
-
 function updateCountdown() {
   const minutes = Math.floor(time / 60);
   const seconds = time % 60;
@@ -329,7 +328,6 @@ function updateCountdown() {
     stopCountdown();
   }
 }
-
 
 function stopCountdown(){
   clearInterval(refreshIntervalId);
