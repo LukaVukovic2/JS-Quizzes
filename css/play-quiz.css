@@ -6,6 +6,7 @@ body{
 main{
   padding: 20px;
 }
+
 form{
   max-width: 800px;
   margin: 0 auto;
@@ -79,6 +80,16 @@ form{
   display: flex;
   justify-content: space-between;
   align-items:baseline;
+}
+
+@media (max-width:540px){
+  .quiz-header{
+    flex-direction: column;
+    flex-wrap: wrap;
+  }
+  .result-element{
+    width: 100%;
+  }
 }
 
 .start-btn, .restart-quiz-btn{

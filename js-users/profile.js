@@ -1,8 +1,11 @@
 import { auth, onAuthStateChanged } from "../firebase/firebase-config.js";
+import { applyAuthChecks } from "./authentification-check.js";
 
 const header = document.querySelector("header");
+
 onAuthStateChanged(auth, user => {
-  console.log(auth.currentUser)
+  applyAuthChecks();
+  
   let created = new Date(auth.currentUser.metadata.creationTime);
   created = created.toDateString().slice(3);
   header.innerHTML = 

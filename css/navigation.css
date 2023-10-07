@@ -40,6 +40,21 @@ nav li{
   color: white;
 }
 
+@media (max-width: 700px){
+  nav ul{
+    flex-wrap: wrap;
+  }
+
+  nav li {
+    width: 100%;
+    border-bottom: 1px solid white;
+  }
+  
+  nav div{
+    flex-wrap: wrap;
+    width: 100%;
+  }
+}
 
 main{
   flex-grow: 1;

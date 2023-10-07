@@ -18,7 +18,7 @@ form{
 }
 
 .questions-container input{
-  width: 600px;
+  width: 100%;
   display: block;
   margin: 20px 0;
   line-height: 30px;

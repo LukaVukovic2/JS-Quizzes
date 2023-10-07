@@ -1,6 +1,7 @@
-import { auth, onAuthStateChanged, push, quizzesInDB, onValue, db, ref } from "../firebase/firebase-config.js";
-import { getDatabase, get, update} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
+import { auth, onAuthStateChanged, db, ref } from "../firebase/firebase-config.js";
+import { get, update} from "https://www.gstatic.com/firebasejs/10.4.0/firebase-database.js";
 import { perfectResult, excellentResult, goodResult, averageResult, belowAverageResult, failureResult } from "../js-quizzes/result-comment.js";
+import { applyAuthChecks } from "../js-users/authentification-check.js";
 
 const quizForm = document.querySelector(".quiz-form");
 const quizHeader = document.querySelector(".quiz-header");
@@ -8,12 +9,11 @@ const specificQuizContainer = document.querySelector(".specific-quiz-container")
 const quizTitle = document.querySelector(".quiz-title");
 const finishQuizBtn = document.querySelector(".finish-quiz-btn");
 const countdown = document.querySelector(".countdown");
+const urlParams = new URLSearchParams(window.location.search);
+
 let time;
 let tempTime;
 let startBtn;
-
-const urlParams = new URLSearchParams(window.location.search);
-
 let correctAnswersShown = false;
 let selectedAnswers;
 let correctAnswers = [];
@@ -28,6 +28,10 @@ let plays;
 
 const id = urlParams.get('id');
 const quizRef = ref(db, `quizzes/${id}`);
+
+onAuthStateChanged(auth, user =>{
+  applyAuthChecks();
+})
 
 get(quizRef)
   .then((snapshot) => {
@@ -45,78 +49,78 @@ get(quizRef)
     }
   })
   .catch((error) => {
-    console.error('Error displaying quiz:', error);
+    console.error('Error displaying quiz:', error.response.data);
   });
 
-  function shuffleQuestions(questionsDB) {
-    for (let i = questionsDB.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [questionsDB[i], questionsDB[j]] = [questionsDB[j], questionsDB[i]];
-    }
-    return questionsDB;
+function shuffleQuestions(questionsDB) {
+  for (let i = questionsDB.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [questionsDB[i], questionsDB[j]] = [questionsDB[j], questionsDB[i]];
   }
-  
-  function displayQuiz(data) {
-    startBtn = document.createElement("button");
-    startBtn.classList.add("start-btn");
-    startBtn.addEventListener("click", (e) => {
-      e.preventDefault();
-      if (!refreshIntervalId) {
-        startBtn.style.display = "none";
-        finishQuizBtn.style.display = "block";
-        toggleInputAvailability();
-        refreshIntervalId = setInterval(updateCountdown, 1000);
-        specificQuizContainer.style.display = "block";
+  return questionsDB;
+}
+
+function displayQuiz(data) {
+  startBtn = document.createElement("button");
+  startBtn.classList.add("start-btn");
+  startBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (!refreshIntervalId) {
+      startBtn.style.display = "none";
+      finishQuizBtn.style.display = "block";
+      toggleInputAvailability();
+      refreshIntervalId = setInterval(updateCountdown, 1000);
+      specificQuizContainer.style.display = "block";
+    }
+  });
+  startBtn.innerHTML = `<i class="fa fa-play fa-xl" aria-hidden="true"></i>`;
+  let elements = ``;
+  let quizBasicInfo = `
+    <h2 class="quiz-title">${data.title}</h2>
+    <div>By: ${data.author[0]} &#183; ${data.category} &#183; ${plays} Plays
+    </div>
+  `;
+  quizTitle.innerHTML = quizBasicInfo;
+
+  const questionsDB = shuffleQuestions(data.questions);
+
+  questionsDB.forEach((question, index) => {
+    elements += `
+      <div class="question-container">
+        <p><b>${index + 1}. ${question.question}</b></p>
+    `;
+    question.answers.forEach((option, i) => {
+      const label = document.createElement('label');
+      label.setAttribute('for', `question${index}_option${i}`);
+      label.classList.add(`question-options`);
+
+      const radioInput = document.createElement('input');
+      radioInput.setAttribute('type', 'radio');
+      radioInput.setAttribute('id', `question${index}_option${i}`);
+      radioInput.setAttribute('name', `question${index}`);
+      radioInput.setAttribute('value', `option${i}`);
+      radioInput.setAttribute('data-question-index', `${index}`);
+      radioInput.classList.add('question-option-input');
+      label.appendChild(radioInput);
+      label.appendChild(document.createTextNode(option));
+
+      if (i === question.correctAnswerIndex) {
+        const correctOption = `option${question.correctAnswerIndex}`;
+        correctAnswers.push(correctOption);
+        label.classList.add('correct-answer');
       }
+
+      elements += label.outerHTML;
+
     });
-    startBtn.innerHTML = `<i class="fa fa-play fa-xl" aria-hidden="true"></i>`;
-    let elements = ``;
-    let quizBasicInfo = `
-      <h2 class="quiz-title">${data.title}</h2>
-      <div>By: ${data.author[0]} &#183; ${data.category} &#183; ${plays} Plays
+    elements += `
       </div>
     `;
-    quizTitle.innerHTML = quizBasicInfo;
-  
-    const questionsDB = shuffleQuestions(data.questions);
-  
-    questionsDB.forEach((question, index) => {
-      elements += `
-        <div class="question-container">
-          <p><b>${index + 1}. ${question.question}</b></p>
-      `;
-      question.answers.forEach((option, i) => {
-        const label = document.createElement('label');
-        label.setAttribute('for', `question${index}_option${i}`);
-        label.classList.add(`question-options`);
-  
-        const radioInput = document.createElement('input');
-        radioInput.setAttribute('type', 'radio');
-        radioInput.setAttribute('id', `question${index}_option${i}`);
-        radioInput.setAttribute('name', `question${index}`);
-        radioInput.setAttribute('value', `option${i}`);
-        radioInput.setAttribute('data-question-index', `${index}`);
-        radioInput.classList.add('question-option-input');
-        label.appendChild(radioInput);
-        label.appendChild(document.createTextNode(option));
-  
-        if (i === question.correctAnswerIndex) {
-          const correctOption = `option${question.correctAnswerIndex}`;
-          correctAnswers.push(correctOption);
-          label.classList.add('correct-answer');
-        }
-  
-        elements += label.outerHTML;
-  
-      });
-      elements += `
-        </div>
-      `;
-    });
-    specificQuizContainer.innerHTML = elements;
-    quizForm.insertBefore(startBtn, specificQuizContainer);
-    countdown.style.display = "inline-block";
-  }
+  });
+  specificQuizContainer.innerHTML = elements;
+  quizForm.insertBefore(startBtn, specificQuizContainer);
+  countdown.style.display = "inline-block";
+}
 
 
 finishQuizBtn.addEventListener("click", (e) => {
@@ -201,7 +205,7 @@ function toggleCorrectAnswers(){
       if((userAnswers[index] === correctAnswers[index]) || !userAnswers[index]){
         if(userAnswers[index] === correctAnswers[index]){
           checkmark = document.createElement("span");
-          checkmark.innerHTML = ` <i class="fa-solid fa-circle-check fa-2xl icon-class" style="color: #11ff00;"></i></i>`;
+          checkmark.innerHTML = ` <i class="fa-solid fa-circle-check fa-lg icon-class" style="color: #11ff00;"></i></i>`;
           label.parentElement.firstElementChild.appendChild(checkmark);
         }
         label.style.backgroundColor = "lightgreen";
@@ -251,7 +255,7 @@ function showSelectedAnswer() {
       });
 
       if (event.target.checked) {
-        questionOptionLabelEl.style.backgroundColor = "rgb(226, 248, 254)";
+        questionOptionLabelEl.style.backgroundColor = "rgb(200, 248, 254)";
         questionOptionLabelEl.style.transform = "scale(1.005)";
       }
     });
@@ -261,7 +265,7 @@ function showSelectedAnswer() {
 function addCrossSymbol(){
   cross = document.createElement("span");
   cross.innerHTML = `
-    <i class="fa-solid fa-circle-xmark fa-2xl icon-class" style="color: #ff0000;"></i>
+    <i class="fa-solid fa-circle-xmark fa-lg icon-class" style="color: #ff0000;"></i>
   `;
   return cross;
 }

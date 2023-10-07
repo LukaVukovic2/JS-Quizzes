@@ -1,4 +1,5 @@
 import { auth, onAuthStateChanged, push, quizzesInDB } from "../firebase/firebase-config.js";
+import { applyAuthChecks } from "../js-users/authentification-check.js";
 
 const categoryContainer = document.querySelector(".select-category-container");
 const category = document.querySelector(".select-category");
@@ -13,13 +14,17 @@ const currentQuizQuestions = document.querySelector(".current-quiz-questions");
 const terminateQuiz = document.querySelector(".terminate-quiz-btn");
 const saveQuizBtn = document.querySelector(".save-quiz-btn");
 const timeLimit = document.querySelector(".quiz-time-limit");
-let totalTimeInSeconds;
+const questions = [];
 
-let selectedOptionIndex = category.selectedIndex;
-let selectedOption = category.options[selectedOptionIndex];
+let totalTimeInSeconds;
+let selectedOptionIndex;
+let selectedOption;
 let inputCategory;
 let quizInfo;
-const questions = [];
+
+onAuthStateChanged(auth, user =>{
+  applyAuthChecks();
+})
 
 category.addEventListener("change", () => {
   selectedOptionIndex = category.selectedIndex;
@@ -51,6 +56,9 @@ function showNextButton() {
 nextButton.addEventListener("click", (e) => {
   category.disabled = true;
   nextButton.disabled = true;
+  if(inputCategory){
+    inputCategory.disabled = true;
+  }
   e.preventDefault();
   questionContainer.style.display = "block";
 });
@@ -123,6 +131,9 @@ terminateQuiz.addEventListener("click", e =>{
 })
 
 function showButtonForSavingQuiz(){
+  if(inputCategory){
+    selectedOption.value = inputCategory.value;
+  }
   totalTimeInSeconds = parseTimeInput(timeLimit.value);
   onAuthStateChanged(auth, user => {
     quizInfo = {
@@ -160,7 +171,6 @@ function saveQuiz(){
   if (totalTimeInSeconds !== null) {
     push(quizzesInDB, quizInfo)
     .then(() => {
-      console.log('Quiz has been successfully saved.');
       resetCreateQuizForm();
     })
     .catch((error) => {

@@ -1,18 +1,22 @@
-import { auth, onAuthStateChanged, push, quizzesInDB, onValue } from "../firebase/firebase-config.js";
+import { auth, onAuthStateChanged, quizzesInDB, onValue } from "../firebase/firebase-config.js";
+import { applyAuthChecks } from "../js-users/authentification-check.js";
 
 let quizInfoContainer = document.querySelector(".quiz-info-container");
 let quizzesArray;
 let currentQuizID;
 
+
+onAuthStateChanged(auth, user =>{
+  applyAuthChecks()
+})
+
 onValue(quizzesInDB, function(snapshot){
   if(snapshot.exists()){
     quizInfoContainer.innerHTML = "";
     quizzesArray = Object.entries(snapshot.val());
-    let i = 0;
-    quizzesArray.forEach((quiz, index) => {
-      let currentQuiz = quizzesArray[i];
-      currentQuizID = currentQuiz[0];
-      let currentQuizValue = currentQuiz[1];
+    quizzesArray.forEach((quiz) => {
+      currentQuizID = quiz[0];
+      let currentQuizValue = quiz[1];
       let quizEl = document.createElement("div");
       quizEl.classList.add("quiz-info");
       let string = 
@@ -23,7 +27,6 @@ onValue(quizzesInDB, function(snapshot){
         `;
       quizEl.innerHTML = string;
       quizInfoContainer.appendChild(quizEl);
-      i++;
     });
   }
   else{

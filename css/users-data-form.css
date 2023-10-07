@@ -3,6 +3,7 @@ body{
   font-family: "Dosis", sans-serif;
   background: linear-gradient(to right, lightblue, rgb(165, 230, 251));
 }
+
 .form-container{
   max-width: 400px;
   margin: 0 auto;
@@ -25,7 +26,7 @@ body{
 
 .users-data-input{
   line-height: 30px;
-  width: 395.5px;
+  width: calc(100% - 6px);
   border-radius: 3px;
   border: 1px solid lightblue;
   font-size: 15px;
@@ -54,6 +55,7 @@ body{
 
 #login-form-btn, #signup-form-btn{
   padding: 5px 10px;
+  margin-left: 5px;
 }
 
 button{

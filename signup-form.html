@@ -13,13 +13,13 @@
     <form id="signup-form" class="users-data-form">
       <h2 class="users-form-title">Sign Up</h2>
       <div id="email-container">
-        <input type="email" class="users-data-input" id="email" placeholder="Email (example@mail.com)" autofocus="1">
+        <input type="email" class="users-data-input" id="email" placeholder="Email (example@mail.com)" autofocus="1" required>
       </div>
       <div id="username-container">
-        <input type="text" class="users-data-input" id="username" placeholder="Username">
+        <input type="text" class="users-data-input" id="username" placeholder="Username" minlength="5" required>
       </div>
       <div id="password-container">
-        <input type="password" class="users-data-input" id="pass" minlength="6" placeholder="Password">
+        <input type="password" class="users-data-input" id="pass" minlength="6" placeholder="Password" required>
       </div>
       <button type="submit" class="users-form-button" id="signup-btn">Sign Up</button>
     </form>

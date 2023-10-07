@@ -4,12 +4,14 @@ const email = document.querySelector("#email");
 const password = document.querySelector("#pass");
 const username = document.querySelector("#username");
 const signUpForm = document.querySelector("#signup-form");
-
-username.addEventListener("click", console.log(username.value))
+const emailContainer = document.querySelector("#email-container");
+const formContainer = document.querySelector(".form-container");
+let errorEmailEl;
 
 const userSignUp = async () => {
   const emailVal = email.value;
   const passVal = password.value;
+
   createUserWithEmailAndPassword(auth, emailVal, passVal)
     .then((userCredential) => {
       const user = userCredential.user;
@@ -21,20 +23,19 @@ const userSignUp = async () => {
     })
     .catch((error) => {
       const errorCode = error.code;
-      const errorMessage = error.message;
-
       if (errorCode === "auth/email-already-in-use"){
-        const element = document.createElement("p");
-        const textnode = document.createTextNode("Email is already taken!");
-        email.style.border = "1px solid red";
-        element.style.color = "red";
-        element.style.margin = "8px 0";
-        element.appendChild(textnode);
-      
-        document.querySelector("#email-container").appendChild(element);
+        if(!errorEmailEl){
+          errorEmailEl = document.createElement("p");
+          errorEmailEl.textContent = "Email is already taken!";
+          email.style.border = "1px solid red";
+          errorEmailEl.style.color = "red";
+          errorEmailEl.style.margin = "8px 0";
+          emailContainer.appendChild(errorEmailEl);
+        }
       }
-      else {
-        console.error("Error:", errorCode, errorMessage);
+      else{
+        formContainer.style.border = "1px solid red";
+        alert("Invalid data - Please try again")
       }
       signUpForm.reset();
     });

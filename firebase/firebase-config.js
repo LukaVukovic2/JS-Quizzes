@@ -22,7 +22,7 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
-
 const db = getDatabase(app);
 const quizzesInDB = ref(db, "quizzes");
+
 export{push, onValue, auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, getAuth, quizzesInDB, db, ref, updateProfile}
