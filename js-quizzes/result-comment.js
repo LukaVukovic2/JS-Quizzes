@@ -64,7 +64,6 @@ const belowAverageResult = [
   "You're definitely keeping things interesting, no doubt about it.",
   "Every failure is just a stepping stone... or maybe a pebble. You decide.",
   "You can always repeat what Gunners would say: 'Next year is ours!'",
-  "Statistically, you could achieve same result if you randomly choosed answers, just saying...",
   "Misson failed! We'll get em next time."
 ]
 
@@ -85,6 +84,7 @@ const failureResult = [
   "Atleast there is no leaderboard yet, so this will be our little secret.",
   "There is some talent hidden inside you, so well hidden even you can't find it.",
   "You can try some other quiz... Or go to sleep... Something 'might' help.",
+  "Statistically, you could achieve better result if you randomly choosed answers, just saying...",
 ]
 
 export {perfectResult, excellentResult, goodResult, averageResult, belowAverageResult, failureResult}

@@ -284,7 +284,7 @@ function addResultComment() {
     case scorePercentage == 100:
       comment = getRandomComment(perfectResult);
       break;
-    case scorePercentage > 90:
+    case scorePercentage > 89:
       comment = getRandomComment(excellentResult);
       break;
     case scorePercentage > 70:
@@ -293,7 +293,7 @@ function addResultComment() {
     case scorePercentage > 50:
       comment = getRandomComment(averageResult);
       break;
-    case scorePercentage > 35:
+    case scorePercentage > 25:
       comment = getRandomComment(belowAverageResult);
       break;
     case scorePercentage >= 0:
