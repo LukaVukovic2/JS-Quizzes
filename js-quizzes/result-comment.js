@@ -4,8 +4,8 @@ const perfectResult = [
   "Is it possible to learn your power?",
   "You are not second but you are Top 2.",
   "It's insult to compare the rest of us to you.",
-  "You deserve to be in Quiz G.O.A.T. debate",
-  "This is your world, we are just living in it"
+  "You deserve to be in Quiz G.O.A.T. debate.",
+  "This is your world, we are just living in it."
 ]
 
 const excellentResult = [
@@ -49,7 +49,7 @@ const averageResult = [
   "You're finding your rhythm. Keep dancing to the beat of your goals.",
   "You're not too shabby at this whole thing. Keep it up!",
   "You're on the path to greatness, one step at a time.",
-  "Not bad, not great either, just like Tot'nham",
+  "Not bad, not great either, just like Tot'nham.",
 ]
 
 const belowAverageResult = [
