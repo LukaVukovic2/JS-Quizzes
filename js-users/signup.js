@@ -8,14 +8,6 @@ const emailContainer = document.querySelector("#email-container");
 const formContainer = document.querySelector(".form-container");
 let errorEmailEl;
 
-
-onAuthStateChanged(auth, user => {
-  user = auth.currentUser;
-  if (user) {
-    window.location.href = "quizzes.html";
-  }
-});
-
 const userSignUp = async () => {
   const emailVal = email.value;
   const passVal = password.value;
@@ -43,7 +35,6 @@ const userSignUp = async () => {
       }
       else{
         formContainer.style.border = "1px solid red";
-        alert("Invalid data - Please try again")
       }
       signUpForm.reset();
     });
