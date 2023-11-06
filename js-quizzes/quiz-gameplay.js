@@ -339,6 +339,7 @@ function stopCountdown(){
   calculateAndShowResult();
   toggleInputAvailability();
   toggleCorrectAnswers();
+  quizHeader.style.position = "static";
   refreshIntervalId = null;
   plays++;
   const updatedData = {
