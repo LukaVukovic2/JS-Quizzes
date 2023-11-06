@@ -1,10 +1,4 @@
-import {auth, onAuthStateChanged} from "../firebase/firebase-config.js";
-
-onAuthStateChanged(auth, user => {
-  if (!user) {
-    window.location.href = "login-form.html";
-  }
-});
+import { auth } from "../firebase/firebase-config.js";
 
 function checkAuth() {
   const user = auth.currentUser;
@@ -14,12 +8,11 @@ function checkAuth() {
 }
 
 function applyAuthChecks() {
-  const protectedRoutes = ["quizzes.html","quiz.html","create-quiz.html","user-profile.html"];
+  const protectedRoutes = ["create-quiz.html"];
 
   if (protectedRoutes.includes(window.location.pathname)) {
     checkAuth();
   }
-
 }
 
 export{applyAuthChecks}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>QuizQuad</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
+  <link rel="manifest" href="favicon/site.webmanifest">
+  <link rel="stylesheet" href="css/users-data-form.css">
+  <link rel="stylesheet" href="css/user-choice.css">
+</head>
+<body>
+  <div class="user-choice-container">
+    <div class="logo-container">
+      <img alt="QuizQuad logo" src="favicon/android-chrome-512x512.png">
+    </div>
+    <h2>Welcome to QuizQuad!</h2> <p>Please select how you'd like to proceed.</p>
+    <button id="login-form-btn" class="users-preference-button" onclick="document.location='login-form.html'">Login <i class="fa-solid fa-right-to-bracket fa-lg" style="color: #007bff;"></i></button>
+    <button id="signup-form-btn" class="users-preference-button" onclick="document.location='signup-form.html'">Sign up <i class="fa-solid fa-user-plus fa-lg" style="color: #007bff;"></i></button>
+    <button id="continue-as-guest-btn" class="users-preference-button" onclick="document.location='quizzes.html'">Continue as guest <i class="fa-solid fa-mask fa-lg" style="color: black;"></i></button>
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
+  <script src="js-users/user-choice.js" type="module"></script>
+</body>
+</html>

@@ -4,7 +4,7 @@ body{
   background: linear-gradient(to right, lightblue, rgb(165, 230, 251));
 }
 
-.form-container{
+.form-container, .user-choice-container{
   max-width: 400px;
   margin: 0 auto;
   padding: 10px;
@@ -39,7 +39,7 @@ body{
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
 }
 
-.users-form-button:hover{
+.users-form-button:hover, .users-preference-button:hover{
   background-color: rgb(222, 222, 222);
 }
 
@@ -53,7 +53,7 @@ body{
   width: 100%;
 }
 
-#login-form-btn, #signup-form-btn{
+#login-form-btn, #signup-form-btn, #continue-as-guest-btn{
   padding: 5px 10px;
   margin-left: 5px;
 }

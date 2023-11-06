@@ -38,7 +38,7 @@ main{
   text-overflow: ellipsis;
 }
 
-a{
+main a{
   text-decoration: none;
   font-weight: bold;
   color: rgb(105, 176, 248);

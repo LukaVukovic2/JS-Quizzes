@@ -25,3 +25,16 @@ header{
     padding: 20px;
   }
 }
+
+.logout-btn, .user-profile-login-btn{
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: 2px solid lightblue;
+  background-color: white;
+  cursor: pointer;
+}
+
+.logout-btn:hover, .user-profile-login-btn:hover{
+  background-color: whitesmoke;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}

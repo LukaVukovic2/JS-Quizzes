@@ -77,7 +77,7 @@ function displayQuiz(data) {
   let elements = ``;
   let quizBasicInfo = `
     <h2 class="quiz-title">${data.title}</h2>
-    <div>By: ${data.author[0]} &#183; ${data.category} &#183; ${plays} Plays
+    <div><i class="fa-solid fa-circle-user" style="color: #007bff;"></i> ${data.author[0]} &#183; ${data.category} &#183; ${plays} Plays
     </div>
   `;
   quizTitle.innerHTML = quizBasicInfo;
@@ -324,12 +324,17 @@ function updateCountdown() {
   countdown.innerHTML = `${formattedMin}:${formattedSec}`;
   time--;
 
+  if(time < 10){
+    countdown.classList.add("fa-beat");
+  }
+
   if (time < 0) {
     stopCountdown();
   }
 }
 
 function stopCountdown(){
+  countdown.classList.remove("fa-beat");
   clearInterval(refreshIntervalId);
   calculateAndShowResult();
   toggleInputAvailability();

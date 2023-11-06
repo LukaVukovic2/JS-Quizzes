@@ -1,0 +1,42 @@
+body{
+  padding-top: 50px;
+  font-family: "Dosis", sans-serif;
+  background: linear-gradient(to right, lightblue, rgb(165, 230, 251));
+}
+
+.user-choice-container{
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.users-preference-button{
+  width: 100%;
+  margin: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 16px;
+  border: 1px solid lightblue;
+}
+
+.users-preference-button:hover{
+  background-color: rgb(215, 234, 252);
+}
+
+h2{
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+button:hover{
+  cursor: pointer;
+}
+
+.logo-container{
+  margin: 0 auto;
+  width: 50%;
+}
+
+.logo-container img{
+  width: 100%;
+  border: 1px solid black;
+  border-radius: 50%;
+}

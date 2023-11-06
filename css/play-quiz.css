@@ -66,7 +66,6 @@ form{
 }
 
 .countdown{
-  display: none;
   margin-top: 10px;
   background-color: #007bff;
   color: white;
@@ -79,7 +78,9 @@ form{
 .quiz-header{
   display: flex;
   justify-content: space-between;
-  align-items:baseline;
+  align-items: baseline;
+  position: sticky;
+  top: 0;
 }
 
 @media (max-width:540px){

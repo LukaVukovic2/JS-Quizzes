@@ -5,6 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>QuizQuad – Create Quiz</title>
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.13.0/css/all.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <link rel="apple-touch-icon" sizes="180x180" href="favicon/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="favicon/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="favicon/favicon-16x16.png">
@@ -20,8 +22,7 @@
         <li><a href="#">Create Quiz</a></li>
       </div>
       <div>
-        <li><a href="user-profile.html">Profile</a></li>
-        <li><a href="#" id="logout-link">Logout</a></li>
+        <li><a href="user-profile.html"><i class="fa-solid fa-circle-user fa-2xl" style="color: white;"></i></a></li>
       </div>
     </ul>
   </nav>
@@ -43,12 +44,26 @@
         </div>
         <button class="next-btn button">Next</button>
         <div class="questions-container">
-          <input type="text" class="quiz-title" placeholder="Quiz title">
-          <input type="text" class="quiz-time-limit" placeholder="Time limit for quiz e.g., 5m30s" title="Time limit for quiz e.g., 5m30s">
+          <div class="quiz-creating-flex">
+            <i class="fa-solid fa-heading" style="color: #2556ad;"></i>
+            <input type="text" class="quiz-title" placeholder="Quiz title">
+          </div>
+          <div class="quiz-creating-flex">
+            <i class="fa-solid fa-hourglass-start"></i>
+            <input type="text" class="quiz-time-limit" placeholder="Time limit for quiz e.g., 5m30s" title="Time limit for quiz e.g., 5m30s">
+          </div>
+          
           <div class="create-question">
             <p>Quiz should have more than four and less than 10 questions</p>
-            <input class="quiz-question" type="text" placeholder="Enter your question">
-            <input class="quiz-answer" type="text" placeholder="Enter four answers and repeat correct one: e.g answer1;answer2;answer3;answer4;answer3 (correct answer)" title="Enter four answers and repeat correct one: e.g answer1;answer2;answer3;answer4;answer3 (correct answer)">
+            <div class="quiz-creating-flex">
+              <i class="fa-solid fa-circle-question" style="color: #102447;"></i>
+              <input class="quiz-question" type="text" placeholder="Enter your question">
+            </div>
+            <div class="quiz-creating-flex">
+              <i class="fa-solid fa-square-check" style="color: #234b90;"></i>
+              <input class="quiz-answer" type="text" placeholder="Enter four answers and repeat correct one: e.g answer1;answer2;answer3;answer4;answer3 (correct answer)" title="Enter four answers and repeat correct one: e.g answer1;answer2;answer3;answer4;answer3 (correct answer)">
+            </div>
+            
             <button class="next-question-btn button">Next question</button>
             <button class="terminate-quiz-btn button">Finish quiz</button>
           </div>
@@ -66,6 +81,5 @@
   </footer>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/firebase/7.14.1-0/firebase.js"></script>
   <script src="js-quizzes/create-quiz.js" type="module"></script>
-  <script src="js-users/logout.js" type="module"></script>
 </body>
 </html>

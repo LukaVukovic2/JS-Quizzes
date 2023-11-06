@@ -1,14 +1,9 @@
-import { auth, onAuthStateChanged, quizzesInDB, onValue } from "../firebase/firebase-config.js";
-import { applyAuthChecks } from "../js-users/authentification-check.js";
+import { quizzesInDB, onValue } from "../firebase/firebase-config.js";
 
 let quizInfoContainer = document.querySelector(".quiz-info-container");
 let quizzesArray;
 let currentQuizID;
 
-
-onAuthStateChanged(auth, user =>{
-  applyAuthChecks()
-})
 
 onValue(quizzesInDB, function(snapshot){
   if(snapshot.exists()){
@@ -22,7 +17,7 @@ onValue(quizzesInDB, function(snapshot){
       let string = 
         ` <h3>${currentQuizValue.title}</h3>
           <p>Category: ${currentQuizValue.category}</p>
-          <p>By: ${currentQuizValue.author[0]} &#183; Plays ${currentQuizValue.plays}</p>
+          <p><i class="fa-solid fa-circle-user" style="color: #007bff;"></i> ${currentQuizValue.author[0]} &#183; Plays ${currentQuizValue.plays}</p>
           <a href="quiz.html?id=${currentQuizID}">Start Quiz</a>
         `;
       quizEl.innerHTML = string;
