@@ -8,5 +8,5 @@ Some of the features that are implemented:   	-you can play any time, on any dev
                                   		-randomized quiz questions each time playing
                                   		-your score after you finish playing
 Firebase Realtime Database is used to store quiz and user data.
-Registration is needed to play quiz.
+Registration is needed to create quizzes.
 
